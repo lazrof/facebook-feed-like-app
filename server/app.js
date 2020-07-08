@@ -6,8 +6,11 @@ var logger = require('morgan');
 const db = require('./config/database');
 db.connect();
 
-var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
+/*
+* Routes
+**/
+const users = require('./routes/users');
+
 
 var app = express();
 
@@ -19,6 +22,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function (req, res) {
   res.json('Hello WMundo');
 });
+
+
+/*
+* URLs
+**/
+app.use('/users',users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
