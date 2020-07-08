@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcryptjs = require('bcryptjs');
 
 let userSchema = new mongoose.Schema({
     name:{
@@ -20,6 +21,11 @@ let userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.methods.passwordValidate = function search (rawPassword) {
+
+    // Load hash from your password DB.
+    return bcryptjs.compareSync(rawPassword, this.password); // true
+}
 
 const User = mongoose.model('User',userSchema);
 

@@ -1,15 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const userController = require('../controllers/UserController');
 const authController = require('../controllers/AuthController');
 
-router.route('/')
-	.get(
-		userController.show
-	)
+router.route('/login')
   	.post(
-		userController.create,
+		authController.authenticate,
 		authController.generateToken,
 		authController.sendToken
   	);

@@ -5,6 +5,25 @@ const User = require('../models/User');
 
 function authenticate(req,res,next) {
     
+    if (req.body.email && req.body.password) {
+
+        User.findOne({email: req.body.email})
+        .then(user=>{
+
+            passwordValidate = user.passwordValidate(req.body.password)
+            
+            if (passwordValidate) {
+                req.user = user;
+                next()
+            }else{
+                next(new Error('Invalid Credentials'));
+            }
+        }).catch(error=> next(error));
+
+    } else {
+        next(new Error('Missing Email or Password'));
+    }
+
 }
 
 function generateToken(req,res,next){
@@ -33,4 +52,4 @@ function sendToken(req,res){
     }
 }
 
-module.exports = { generateToken, sendToken }
+module.exports = { generateToken, sendToken, authenticate}

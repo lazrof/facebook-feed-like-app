@@ -23,16 +23,22 @@ function create(req,res,next){
 }
 
 function show(req,res){
+    //let algo = User.passwordValidate('algo');
+    //res.json({"message": algo});
 
-    res.json({"message": "working!"});
+    // User.findOne({email: "nunzio2@test.com"})
+    // .then(user => {
 
-    /* User.findOne({email: req.user.email})
-    .then(user =>{
-        res.json(user);
-    }).catch(err =>{
-        console.log(err)
-        res.status(500).json({error})
-    }); */
+    //     if (user.passwordValidate('123456')) {
+    //         res.json(user);
+    //     }else{
+    //         res.json({msg:'bad'});
+    //     }
+    // }).catch(err =>{
+    //     console.log(err)
+    //     res.status(500).json({err})
+    // })
+
 }
 
 module.exports = { create, show}
