@@ -1,0 +1,11 @@
+version: "2"
+services:
+  server:
+    container_name: server
+    restart: always
+    build: ./server/
+    command: "npm start"
+    volumes:    
+      - "./server:/src/"  
+    ports:
+      - "8000:8000"

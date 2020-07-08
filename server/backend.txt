@@ -1,0 +1,8 @@
+Backend
+- MVC
+- Registro usuarios
+    - User
+        - name
+        - email (unique)
+        - password (encriptado)
+
