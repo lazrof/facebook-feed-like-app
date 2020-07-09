@@ -4,8 +4,27 @@ const buildParams   = require('./helpers').buildParams;
 
 const validParams = ['title','content','image'];
 
-function find(req,res,next) {
-    Post.findOne({id:req.params.id})
+function index(req, res){
+
+    const page = !req.query.page ? 1 : req.query.page; 
+    const options = {
+        page,
+        limit: 5,
+    };
+    
+    if (!req.user) return res.status(400).json({ message: "Invalid Request, missing Token" });
+    
+    Post.paginate({'_user': req.user.id},options)
+    .then(docs=>{
+        res.json(docs);
+    }).catch(err=>{
+      console.log(err);
+        res.json(err);
+    })
+}
+
+function find(req, res, next) {
+    Post.findOne({_id:req.params.id})
     .then(post=>{
         req.post = post;
         next();
@@ -14,31 +33,19 @@ function find(req,res,next) {
     });
 }
 
-// function index(req,res){
-//     //Todos los lugares
-//     Place.paginate({},{ page: req.query.page || 1, limit:8, sort: {'_id': -1}  })
-//     .then(docs=>{
-//       res.json(docs);
-//     }).catch(err=>{
-//       console.log(err);
-//       res.json(err);
-//     })
-// }
+function show(req, res) {
+    res.json(req.post);
+}
 
 function create(req, res, next){
-    //Crear nuevos lugares
+
     const params = buildParams(validParams,req.body);
-    //console.log(req.user);
-    //params['_user'] = req.user.id;
-    params['_user'] = '5f0564b9539f4c12f5b326c9';
-    console.log('#### params');
-    console.log(params)
+    params['_user'] = req.user.id;
+
     Post.create(params).then(doc=>{
         req.post = doc;
         next();
     }).catch(err=>{
-        console.log('--- function create(req,res)')
-        console.log(err)
         next(err);
     });
 }
@@ -77,4 +84,4 @@ function saveImage(req, res) {
 function test(req, res) {
     res.json('working')
 }
-module.exports = {create, multerMiddleware, saveImage, test};
+module.exports = {index, find, show, create, multerMiddleware, saveImage, test};
