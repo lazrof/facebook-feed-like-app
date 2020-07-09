@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const userController = require('../controllers/UserController');
+const usersController = require('../controllers/UsersController');
 const authController = require('../controllers/AuthController');
 
 router.route('/')
 	.get(
-		userController.show
+		usersController.show
 	)
   	.post(
-		userController.create,
+		usersController.create,
 		authController.generateToken,
 		authController.sendToken
   	);

@@ -2,26 +2,26 @@ const jwt = require('jsonwebtoken');
 const secrets = require('../config/secrets');
 
 module.exports = function (req, res, next) {
-    const authToken = req.header('Authorization');
+    const token = req.header('Authorization');
     
-    if (!authToken){
+    if (!token){
         return res.status(401).json(
             { message: "Authorization Token not provided." }
         );
     }
 
-    jwt.verify(authToken, secrets.secretKey, function(err, decoded) {
+    jwt.verify(token, secrets.secretKey, function(err, decoded) {
         
         if(decoded){
             req.user = {
-                id: tokenData.id,
-                email: tokenData.email
+                id: decoded.id,
+                email: decoded.email
             };
 
             next();
         } else {
             console.log(err);
-            res.status(401).json({ message: "Security token invalid" });
+            res.status(401).json({ message: "Security token is invalid." });
         }
     });
        

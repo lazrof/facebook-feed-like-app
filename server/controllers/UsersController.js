@@ -8,7 +8,8 @@ function create(req,res,next){
 
     let params  = buildParams(validParams,req.body);
     let salt    = bcryptjs.genSaltSync(10);
-    
+    console.log('params')
+    console.log(params)
     params.password = bcryptjs.hashSync(params['password'], salt);
     
     User.create(params)
@@ -38,7 +39,7 @@ function show(req,res){
     //     console.log(err)
     //     res.status(500).json({err})
     // })
-
+    res.json({"message": 'algo'});
 }
 
 module.exports = { create, show}
