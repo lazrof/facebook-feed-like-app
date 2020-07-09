@@ -23,18 +23,93 @@ function index(req, res){
     })
 }
 
+function search(req, res) {
+    const page = !req.query.page ? 1 : req.query.page; 
+    const options = {
+        page,
+        limit: 5,
+    };
+
+    if (!req.user) return res.status(400).json({ message: "Invalid Request, missing Token" });
+    
+    const searchTitle = 'Vadin';
+    
+    Post.paginate(
+    {
+        $and: [
+            {'_user': req.user.id},
+            {
+                $or: [ 
+                { title: { $regex: `/${searchTitle}/`, $options: 'i' } }, 
+                { content: { $regex: `/${searchTitle}/`, $options: 'i' } }, 
+                ]
+            }
+        ]
+    } 
+    ,options)
+    .then(docs=>{
+        res.json(docs);
+    }).catch(err=>{
+      console.log(err);
+        res.json(err);
+    })
+}
+
 function find(req, res, next) {
-    Post.findOne({_id:req.params.id})
+
+    if (!req.user) return res.status(400).json({ message: "Invalid Request, missing Token" });
+
+    Post.findOne({_id:req.params.id, _user:req.user.id})
     .then(post=>{
         req.post = post;
         next();
     }).catch(err=>{
-        next(err);
+        res.status(400).json({ message: "Invalid Request, Post Not Found" });
     });
 }
 
 function show(req, res) {
-    res.json(req.post);
+    if (req.post){
+        res.json(req.post);
+    } else {
+        res.status(404).json({ message: "Post Not Found" });
+    }
+}
+
+function update(req, res, next){
+
+    if (req.post){
+        const params = buildParams(validParams,req.body);
+
+        req.post = Object.assign(req.post,params);
+        req.post.save().then(doc=>{
+            console.log(doc)
+            req.post = doc;
+            next();
+        }).catch(err=>{
+            console.log(err);
+            next(err);
+        });
+
+    } else {
+        return res.status(400).json({ message: "Can't update post, missing Token" });
+    }
+}
+
+function destroy(req,res){
+
+    if (req.post){
+        
+        req.post.remove().then(doc=>{
+            res.json({})
+        }).catch(err=>{
+            console.log(err);
+            res.json(err);
+        });
+    } else {
+        return res.status(400).json({ message: "Can't delete post, missing Token" });
+    }
+
 }
 
 function create(req, res, next){
@@ -51,14 +126,12 @@ function create(req, res, next){
 }
 
 function multerMiddleware() {
-
-	// si es un solo archivo usamos .single
-	// el resultado de este return es un middleware por eso, en las routes queda instanciada la función
+    // Uploading Image to server
 	return upload.single('image')
 }
 
 function saveImage(req, res) {
-
+    // Uploading To Cloudinary
 	if(req.post){
 
 		if(req.file){
@@ -71,7 +144,8 @@ function saveImage(req, res) {
 			    res.json(err);
             });
 		} else {
-            res.status(400).json({message: 'Image error'});
+
+            res.json(req.post);
         }
 
 
@@ -82,6 +156,15 @@ function saveImage(req, res) {
 }
 
 function test(req, res) {
-    res.json('working')
+    
+    Post.findOne({_id:'5f06b400f9c67f0769dc8a1e', _user:'5f0564b9539f4c12f5b326c9'})
+    .then(post=>{
+        console.log('||| function find(req, res, next) post')
+        console.log(post)
+        res.json(post)
+    }).catch(err=>{
+        res.json(err)
+    });
+
 }
-module.exports = {index, find, show, create, multerMiddleware, saveImage, test};
+module.exports = {index, find, show, create, update, destroy, multerMiddleware, saveImage, search, test};

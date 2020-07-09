@@ -14,11 +14,30 @@ router.route('/')
         postsController.create,
         postsController.saveImage);
 
+
+router.route('/search')
+    .get(
+        authorizeMiddleware,
+        postsController.search)
+
 router.route('/:id')
     //los metodos HTTP pueden rezcibir varios middlewares aparte de controladores
     .get(
+        authorizeMiddleware,
         postsController.find, 
         postsController.show)
-    /* .put(postsController.find, postsController.update)
-    .delete(postsController.find, postsController.destroy) */
+    .put(
+        authorizeMiddleware,
+        postsController.find,
+        postsController.update,
+        postsController.multerMiddleware(),
+        postsController.saveImage)
+    .delete(
+        authorizeMiddleware,
+        postsController.find, 
+        postsController.destroy)
+
+// router.route('/test')
+//     .get(
+//         postsController.test)
 module.exports = router; 

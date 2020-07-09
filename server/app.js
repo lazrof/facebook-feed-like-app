@@ -20,6 +20,7 @@ db.connect();
 *
 **/
 
+
 const posts = require('./routes/posts');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
