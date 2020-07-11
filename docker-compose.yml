@@ -1,12 +1,13 @@
 version: "2"
 services:
-  server:
-    container_name: server
+  fb_like_backend:
+    container_name: fb_like_backend
     restart: always
     build: ./server/
     command: "npm start"
     volumes:
       - "./server:/src/"  
+      - /src/node_modules  
     ports:
       - "8000:8000"
   fb_like_front:

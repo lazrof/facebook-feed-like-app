@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+import LogIn from './components/auth/login/login';
+import Register from './components/auth/register/register';
+import {logIn, logOut } from './redux/actions/user/actions';
+import "semantic-ui-css/semantic.min.css";
+import './App.scss';
 
-function App() {
+function App(props) {
+
+  // componentDidMount
+  //useEffect(() => console.log('mounted'), []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={LogIn} />
+          <Route exact path="/register" component={Register} />
+        </Switch>
+      </Router>
     </div>
   );
 }
+
+// const mapStateToProps = state => {
+//   return {
+//     currentUser: state.userReducer.currentUser,
+//   }
+// };
+
+// const mapDispatchToProps = {
+//   logIn,
+//   logOut
+// }
+
+//export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default App;

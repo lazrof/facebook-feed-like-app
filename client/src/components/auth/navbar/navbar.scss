@@ -1,0 +1,19 @@
+nav {
+    display: flex !important;
+    justify-content: flex-end;
+    margin: 20px 20px;
+    
+    a {
+        margin: 0 15px;
+        color: #000;
+        border: 1px solid #000;
+        border-radius: 5px;
+        padding: 8px 15px;
+        transition: .3s all;
+
+        &:hover {
+            background: #000;
+            color: #fff;
+        }
+    }
+}
