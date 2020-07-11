@@ -5,7 +5,18 @@ services:
     restart: always
     build: ./server/
     command: "npm start"
-    volumes:    
+    volumes:
       - "./server:/src/"  
     ports:
       - "8000:8000"
+  fb_like_front:
+    container_name: fb_like_front
+    restart: always
+    build: ./client/
+    stdin_open: true
+    command: "npm start"
+    volumes:    
+      - "./app/node_modules"  
+      - "./client:/app/"  
+    ports:
+      - "3000:3000"
