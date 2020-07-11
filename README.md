@@ -2,6 +2,7 @@
 
 
 Prueba Tecnica NodeJS y ReactJS
+
 Nunzio Ruffo
 
 Tecnologías: NodeJS, Express Framework, MongoDB, Cloudinary(para servicio de imagenes), ReactJS, Redux,
@@ -13,6 +14,7 @@ Para correr el proyecto se debe usar docker-compose
 
 ## Rutas para el backend
 Funcionando en el puerto :8000
+
 /users
 - POST : Registro de usuario
 
@@ -26,6 +28,7 @@ Funcionando en el puerto :8000
 - DELETE    : Eliminar un post
 
 Autenticación
+
 /login 
 - POST : Ingreso al App
 
@@ -33,6 +36,8 @@ Autenticación
 ## Frontend 
 Funcionando el Login y el Registro
 
-/  : Para Iniciar sesión
-/register   : Para el registro
-/home       : Aterrizaje luego del registro
+- /  : Para Iniciar sesión
+
+- /register   : Para el registro
+
+- /home       : Aterrizaje luego del registro
