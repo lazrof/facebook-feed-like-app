@@ -37,7 +37,5 @@ router.route('/:id')
         postsController.find, 
         postsController.destroy)
 
-// router.route('/test')
-//     .get(
-//         postsController.test)
+
 module.exports = router; 

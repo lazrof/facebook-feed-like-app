@@ -149,14 +149,4 @@ function saveImage(req, res) {
 	
 }
 
-function test(req, res) {
-    
-    Post.findOne({_id:'5f06b400f9c67f0769dc8a1e', _user:'5f0564b9539f4c12f5b326c9'})
-    .then(post=>{
-        res.json(post)
-    }).catch(err=>{
-        res.json(err)
-    });
-
-}
-module.exports = {index, find, show, create, update, destroy, multerMiddleware, saveImage, search, test};
+module.exports = {index, find, show, create, update, destroy, multerMiddleware, saveImage, search};

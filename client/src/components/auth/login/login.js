@@ -62,6 +62,7 @@ const LogIn = (props) => {
     return(
         <>
         <Navbar />
+        { !props.registerSuccess ?  '' : <p className="register-success">Register Done! Now Login</p> }
         <Grid textAlign="center" verticalAlign="middle" className="app">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon color="grey" textAlign="center">
@@ -110,7 +111,8 @@ const mapStateToProps = state => {
     serverResponseStatus: state.userReducer.responseStatus,
     serverResponseMessage: state.userReducer.responseMessage,
     isAuthenticated: state.userReducer.authenticated,
-    authToken: state.userReducer.authToken
+    authToken: state.userReducer.authToken,
+    registerSuccess: state.userReducer.registerSuccess
   };
 }
 

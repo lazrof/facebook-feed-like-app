@@ -120,8 +120,6 @@ const Register = (props) => {
 const mapStateToProps = state => {
   return {
     serverResponseStatus: state.userReducer.responseStatus,
-    serverResponseMessage: state.userReducer.responseMessage,
-    isAuthenticated: state.userReducer.authenticated
   };
 }
 
