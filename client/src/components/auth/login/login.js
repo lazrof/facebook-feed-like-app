@@ -19,8 +19,8 @@ const LogIn = () => {
         <Navbar />
         <Grid textAlign="center" verticalAlign="middle" className="app">
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h1" icon color="gray" textAlign="center">
-            <Icon name="users icon" color="gray" />
+          <Header as="h1" icon color="grey" textAlign="center">
+            <Icon name="users" color="grey" />
 
             Login
           </Header>
@@ -53,7 +53,7 @@ const LogIn = () => {
               <Button
                 disabled={false}
                 className={false ? "loading" : ""}
-                color="gray"
+                color="grey"
                 fluid
                 size="large"
               >

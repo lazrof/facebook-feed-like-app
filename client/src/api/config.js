@@ -1,16 +1,4 @@
-// import axios from 'axios';
-
-// const axiosInstance = axios.create({
-//     baseURL: 'https://localhost:8000/',
-// });
-
-// // const setToken = authToken => {
-
-// //     axiosInstance.defaults.headers.common['Authorization'] = authToken;
-
-// // }
-
-// const hola = 'ola';
+const serverBaseURL = 'http://localhost:8000/';
 
 
-// export default {axiosInstance, hola}
+export default serverBaseURL;

@@ -5,21 +5,24 @@ const buildParams = require('./helpers').buildParams;
 const validParams = ['email','name','password'];
 
 function create(req,res,next){
-
+    console.log(req.body);
     let params  = buildParams(validParams,req.body);
     let salt    = bcryptjs.genSaltSync(10);
-    console.log('params')
-    console.log(params)
+
+    console.log(params)    
     params.password = bcryptjs.hashSync(params['password'], salt);
     
     User.create(params)
     .then(user=>{
         req.user = user;
         next();
-    }).catch(error=>{
-        res.status(500).json({
-            error
-        })
+    }).catch(err=>{
+        if (err.name === 'MongoError' && err.code === 11000) {
+            res.status(400).json({ message: 'Email already exists' });
+        } else {
+            res.status(500).json({ err });
+        }
+        
     })
 }
 

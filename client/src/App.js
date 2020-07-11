@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 import LogIn from './components/auth/login/login';
 import Register from './components/auth/register/register';
-import {logIn, logOut } from './redux/actions/user/actions';
 import "semantic-ui-css/semantic.min.css";
 import './App.scss';
 
