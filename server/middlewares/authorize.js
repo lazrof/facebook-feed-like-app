@@ -20,7 +20,6 @@ module.exports = function (req, res, next) {
 
             next();
         } else {
-            console.log(err);
             res.status(401).json({ message: "Security token is invalid." });
         }
     });

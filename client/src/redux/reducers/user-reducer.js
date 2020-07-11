@@ -6,7 +6,7 @@ import * as actionTypes from '../actions/user/types';
 const initialUserState = {
   currentUser: null,
   authToken: null,
-  authenticate: null,
+  authenticated: null,
   responseStatus: null,
   responseMessage:null,
   registerSuccess: null
@@ -27,7 +27,7 @@ const userReducer = (state = initialUserState, action) => {
           authToken: action.payload.data.jwt,
           responseStatus: true,
           responseMessage: 'success',
-          authenticate: true
+          authenticated: true
         };
       
       } else {

@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logIn } from '../../../redux/actions/user/actions';
 import Navbar from '../navbar/navbar';
 import {
     Grid,
@@ -12,7 +14,50 @@ import {
 } from "semantic-ui-react";
 import './login.scss';
 
-const LogIn = () => {
+const LogIn = (props) => {
+
+  const [ userData , setUserData ] = useState({
+    email:null,
+    password:null
+  });
+
+  const [localErrors, setLocalErrors] = useState(null)
+
+  if(props.isAuthenticated){
+    props.history.push('/home');
+  }
+
+
+  const handleChange = event => {
+    event.preventDefault();
+    setUserData({
+        ...userData,
+        [event.target.name]: event.target.value
+    });
+  };
+
+  const displayErrors = errors =>{
+    return errors.map((error) => <p key={error}>Fill {error} field.</p>);
+  }
+
+
+  const handleSubmit = () => {
+
+    if ( !userData.email || !userData.password ){
+      let err = []
+      for (let i in userData){
+        if (!userData[i]){
+          err.push(i)
+        }
+      }
+      setLocalErrors(err);
+
+    } else {
+      setLocalErrors([]);
+      props.logIn(userData);
+    }
+      
+  }
 
     return(
         <>
@@ -24,35 +69,23 @@ const LogIn = () => {
 
             Login
           </Header>
-          <Form /* onSubmit={this.handleSubmit} */ size="large">
+          <Form onSubmit={handleSubmit} size="large">
             <Segment stacked>
-              <Form.Input
-                fluid
+              <input 
+                type="email" 
+                placeholder="Email Address" 
                 name="email"
-                icon="mail"
-                iconPosition="left"
-                placeholder="Email Address"
-                /* onChange={this.handleChange} */
-                value="{email}"
-                /* className={this.handleInputError(errors, "email")} */
-                type="email"
-              />
-
-              <Form.Input
-                fluid
+                onChange={handleChange}
+              ></input>
+              <input 
+                type="password" 
+                placeholder="Password Confirmation" 
                 name="password"
-                icon="lock"
-                iconPosition="left"
-                placeholder="Password"
-                /* onChange={this.handleChange} */
-                value="{password}"
-                /* className={this.handleInputError(errors, "password")} */
-                type="password"
-              />
+                onChange={handleChange}
+              ></input>
+
 
               <Button
-                disabled={false}
-                className={false ? "loading" : ""}
                 color="grey"
                 fluid
                 size="large"
@@ -61,6 +94,8 @@ const LogIn = () => {
               </Button>
             </Segment>
           </Form>
+          { localErrors ?  <Message error> {displayErrors(localErrors)} </Message> : '' }
+
           <Message>
             Don't have an account? <Link to="/register">Register</Link>
           </Message>
@@ -70,4 +105,17 @@ const LogIn = () => {
     )
 }
 
-export default LogIn;
+const mapStateToProps = state => {
+  return {
+    serverResponseStatus: state.userReducer.responseStatus,
+    serverResponseMessage: state.userReducer.responseMessage,
+    isAuthenticated: state.userReducer.authenticated,
+    authToken: state.userReducer.authToken
+  };
+}
+
+const mapDispatchToProps = {
+  logIn
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

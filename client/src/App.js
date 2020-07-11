@@ -8,32 +8,18 @@ import './App.scss';
 
 function App(props) {
 
-  // componentDidMount
-  //useEffect(() => console.log('mounted'), []);
-
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route exact path="/" component={LogIn} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/home" component={Register} />
         </Switch>
       </Router>
     </div>
   );
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     currentUser: state.userReducer.currentUser,
-//   }
-// };
-
-// const mapDispatchToProps = {
-//   logIn,
-//   logOut
-// }
-
-//export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default App;

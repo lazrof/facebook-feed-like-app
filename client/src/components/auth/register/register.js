@@ -34,7 +34,6 @@ const Register = (props) => {
         ...userData,
         [event.target.name]: event.target.value
     });
-
   };
 
   const displayErrors = errors =>{
@@ -131,5 +130,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
-
-//export default Register;

@@ -18,7 +18,6 @@ function index(req, res){
     .then(docs=>{
         res.json(docs);
     }).catch(err=>{
-      console.log(err);
         res.json(err);
     })
 }
@@ -50,7 +49,6 @@ function search(req, res) {
     .then(docs=>{
         res.json(docs);
     }).catch(err=>{
-      console.log(err);
         res.json(err);
     })
 }
@@ -83,11 +81,9 @@ function update(req, res, next){
 
         req.post = Object.assign(req.post,params);
         req.post.save().then(doc=>{
-            console.log(doc)
             req.post = doc;
             next();
         }).catch(err=>{
-            console.log(err);
             next(err);
         });
 
@@ -103,7 +99,6 @@ function destroy(req,res){
         req.post.remove().then(doc=>{
             res.json({})
         }).catch(err=>{
-            console.log(err);
             res.json(err);
         });
     } else {
@@ -140,7 +135,6 @@ function saveImage(req, res) {
 			req.post.updateImage(path).then(result =>{
                 res.json(req.post);
             }).catch(err => {
-                console.log(err);
 			    res.json(err);
             });
 		} else {
@@ -159,8 +153,6 @@ function test(req, res) {
     
     Post.findOne({_id:'5f06b400f9c67f0769dc8a1e', _user:'5f0564b9539f4c12f5b326c9'})
     .then(post=>{
-        console.log('||| function find(req, res, next) post')
-        console.log(post)
         res.json(post)
     }).catch(err=>{
         res.json(err)
