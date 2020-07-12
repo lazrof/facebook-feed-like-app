@@ -5,8 +5,16 @@ Prueba Tecnica NodeJS y ReactJS
 
 Nunzio Ruffo
 
-Tecnologías: NodeJS, Express Framework, MongoDB, Cloudinary(para servicio de imagenes), ReactJS, Redux,
-Redux Thunk, SASS.
+Tecnologías: 
+- NodeJS
+- Express Framework
+- JSON Web Tokens 
+- MongoDB
+- Cloudinary(para servicio de imagenes)
+- ReactJS
+- Redux
+- Redux Thunk
+- SASS
 
 Para correr el proyecto se debe usar docker-compose
 
