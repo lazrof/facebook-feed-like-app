@@ -20,8 +20,6 @@ const userReducer = (state = initialUserState, action) => {
 
     case actionTypes.LOGIN:
       
-      if (action.payload.status == 200){
-
         localStorage.setItem('authToken', action.payload.data.jwt)
         return {
           ...state,
@@ -31,24 +29,19 @@ const userReducer = (state = initialUserState, action) => {
             status:'success',
             message:'Login success!'
           },
-          authenticated: true
+          authenticated: true,
+          registerSuccess:false
         };
-      
-      } else {
 
-        return {
-          ...state,
-          response:{
-            status:'error',
-            message:action.payload.data.message
-          },
-        };        
-      }
-
-    case actionTypes.LOGOUT:
+    case actionTypes.LOGIN_FAIL:
       return {
-        currentUser: "LOGOUT"
-      };
+        ...state,
+        response:{
+          status:'error',
+          message: 'Error, Invalid Credentials.'
+        },
+        authenticated: false,
+      }
 
     case actionTypes.REGISTER_USER:
       
@@ -69,7 +62,7 @@ const userReducer = (state = initialUserState, action) => {
         registerSuccess: false,
         response:{
           status:'error',
-          message: 'Error, email already exists'
+          message: 'Error, email already exists.'
         }
       }
 

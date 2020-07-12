@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logIn } from '../../../redux/actions/user/actions';
 import Navbar from '../../navbar/navbar';
+import MessageAlert from '../../message-alert/message-alert';
 import {
     Grid,
     Form,
@@ -24,9 +25,8 @@ const LogIn = (props) => {
   const [localErrors, setLocalErrors] = useState(null)
 
   if(props.isAuthenticated){
-    props.history.push('/home');
+    props.history.push('/posts');
   }
-
 
   const handleChange = event => {
     event.preventDefault();
@@ -35,11 +35,6 @@ const LogIn = (props) => {
         [event.target.name]: event.target.value
     });
   };
-
-  const displayErrors = errors =>{
-    return errors.map((error) => <p key={error}>Fill {error} field.</p>);
-  }
-
 
   const handleSubmit = () => {
 
@@ -59,59 +54,81 @@ const LogIn = (props) => {
       
   }
 
-    return(
-        <>
-        <Navbar />
-        { !props.registerSuccess ?  '' : <p className="register-success">Register Done! Now Login</p> }
-        <Grid textAlign="center" verticalAlign="middle" className="app">
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h1" icon color="grey" textAlign="center">
-            <Icon name="users" color="grey" />
+  const Alerts = () => {
 
-            Login
-          </Header>
-          <Form onSubmit={handleSubmit} size="large">
-            <Segment stacked>
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                name="email"
-                onChange={handleChange}
-              ></input>
-              <input 
-                type="password" 
-                placeholder="Password Confirmation" 
-                name="password"
-                onChange={handleChange}
-              ></input>
+    if (localErrors != null && localErrors.length > 0){
+      let messageErrors = []
+      localErrors.forEach(err => {
+        messageErrors.push(
+          {message: `${err} field is required`, status:'error'}
+        )
+      });
+      return <MessageAlert alerts={messageErrors} /> 
+
+    } else if(props.serverResponse.status == "error") {
+      let serverErrors = [{message: props.serverResponse.message , status:'error'}];
+      return <MessageAlert alerts={serverErrors} />
+
+    } else if (props.registerSuccess && props.serverResponse) {
+      let registerAlert = [{message: props.serverResponse.message , status:'success'}]
+      return <MessageAlert alerts={registerAlert} />
+
+    } else {
+      return ''
+    }
+  }
+
+  return(
+    <>
+      <Navbar />
+      <Grid textAlign="center" verticalAlign="middle" className="app">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as="h1" icon color="grey" textAlign="center">
+          <Icon name="users" color="grey" />
+
+          Login
+        </Header>
+        <Form onSubmit={handleSubmit} size="large">
+          <Segment stacked>
+            <input 
+              type="email" 
+              placeholder="Email Address" 
+              name="email"
+              onChange={handleChange}
+            ></input>
+            <input 
+              type="password" 
+              placeholder="Password Confirmation" 
+              name="password"
+              onChange={handleChange}
+            ></input>
 
 
-              <Button
-                color="grey"
-                fluid
-                size="large"
-              >
-                Submit
-              </Button>
-            </Segment>
-          </Form>
-          { localErrors ?  <Message error> {displayErrors(localErrors)} </Message> : '' }
+            <Button
+              color="grey"
+              fluid
+              size="large"
+            >
+              Submit
+            </Button>
+          </Segment>
+        </Form>
 
-          <Message>
-            Don't have an account? <Link to="/register">Register</Link>
-          </Message>
-        </Grid.Column>
-      </Grid>
-        </>
-    )
+        <Alerts />
+
+        <Message>
+          Don't have an account? <Link to="/register">Register</Link>
+        </Message>
+      </Grid.Column>
+    </Grid>
+  </>
+  )
 }
 
 const mapStateToProps = state => {
   return {
-    serverResponseStatus: state.userReducer.responseStatus,
-    serverResponseMessage: state.userReducer.responseMessage,
+    serverResponse: state.userReducer.response,
     isAuthenticated: state.userReducer.authenticated,
-    authToken: state.userReducer.authToken,
     registerSuccess: state.userReducer.registerSuccess
   };
 }

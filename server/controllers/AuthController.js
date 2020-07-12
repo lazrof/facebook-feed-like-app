@@ -16,12 +16,12 @@ function authenticate(req,res,next) {
                 req.user = user;
                 next()
             }else{
-                next(new Error('Invalid Credentials'));
+                res.status(401).json({ message: "Invalid Password" });
             }
         }).catch(error=> next(error));
 
     } else {
-        next(new Error('Missing Email or Password'));
+        res.status(400).json({ message: "Missing email or password" });
     }
 
 }

@@ -23,11 +23,10 @@ const Register = (props) => {
   });
 
   const [localErrors, setLocalErrors] = useState(null)
-
-  if(props.registerSuccess){
-    props.history.push('/');
+  
+  if(props.isAuthenticated){
+    props.history.push('/posts');
   }
-
 
   const handleChange = event => {
     event.preventDefault();
@@ -51,6 +50,7 @@ const Register = (props) => {
     } else {
       setLocalErrors([]);
       props.registerUser(userData);
+      props.history.push('/');
     }
       
   }
@@ -122,7 +122,7 @@ const Register = (props) => {
           <ErrorsAlerts />
 
           <Message>
-            Already have an account? <Link to="/register">Login</Link>
+            Already have an account? <Link to="/">Login</Link>
           </Message>
         </Grid.Column>
       </Grid>
@@ -133,7 +133,8 @@ const Register = (props) => {
 const mapStateToProps = state => {
   return {
     registerSuccess: state.userReducer.registerSuccess,
-    serverResponse: state.userReducer.response
+    serverResponse: state.userReducer.response,
+    isAuthenticated: state.userReducer.authenticated
   };
 }
 

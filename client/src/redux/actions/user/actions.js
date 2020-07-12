@@ -3,6 +3,7 @@ import serverBaseURL from '../../../api/config';
 import { 
   REGISTER_USER, 
   REGISTER_FAIL, 
+  CLEAR_REGISTER_DATA,
   LOGIN, 
   LOGOUT,
   LOGIN_FAIL

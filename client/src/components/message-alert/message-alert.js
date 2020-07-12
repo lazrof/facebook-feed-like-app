@@ -3,7 +3,6 @@ import './message-alert.scss';
 const MessageAlert = (props) => {
     
     const MapAlerts = () => {
-        console.log(props.alerts);
         return props.alerts.map((alert) => <p key={alert} className={alert.status}>{alert.message}</p>)
     }
 
