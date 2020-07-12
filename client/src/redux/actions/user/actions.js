@@ -3,11 +3,14 @@ import serverBaseURL from '../../../api/config';
 import { 
   REGISTER_USER, 
   REGISTER_FAIL, 
-  CLEAR_REGISTER_DATA,
   LOGIN, 
   LOGOUT,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  VALIDATE_TOKEN,
+  VALIDATE_TOKEN_FAIL
 } from './types';
+
+axios.defaults.baseURL = serverBaseURL;
 
 
 export const registerUser = userData => {
@@ -15,19 +18,19 @@ export const registerUser = userData => {
   return async (dispatch) => {
     await axios({
       method: 'post',
-      url: `${serverBaseURL}users`,
+      url: '/users',
       data: userData
     }).then(response => {
         dispatch({
-            type: REGISTER_USER,
-            payload: response
+          type: REGISTER_USER,
+          payload: response
         });
 
     }).catch(error => {
       console.log(error)
         dispatch({
-            type: REGISTER_FAIL,
-            payload: error
+          type: REGISTER_FAIL,
+          payload: error
         })
     });
   }
@@ -38,7 +41,7 @@ export const logIn = userCredentials => {
   return async (dispatch) => {
     await axios({
       method: 'post',
-      url: `${serverBaseURL}login`,
+      url: '/login',
       data: userCredentials
     }).then(response => {
         dispatch({
@@ -54,6 +57,36 @@ export const logIn = userCredentials => {
     });
   }
 };
+
+export function authenticateUser() {
+
+  let token = localStorage.getItem('authToken');
+
+  if (!token){
+    return {
+      type: VALIDATE_TOKEN_FAIL
+    }
+  }
+
+  axios.defaults.headers.common['Authorization'] = token;
+
+  return async (dispatch) => {
+      await axios({
+        method: 'get',
+        url: '/users'
+      }).then(response => {
+          dispatch({
+              type: VALIDATE_TOKEN,
+              payload: response
+          });
+      }).catch(error => {
+          dispatch({
+            type: VALIDATE_TOKEN_FAIL,
+            payload: error
+          });
+      });
+  }
+}
 
 export const logOut = user => {
   

@@ -25,5 +25,16 @@ function create(req,res,next){
     })
 }
 
+function show(req, res, next) {
+    
+    User.findById(req.user.id).select('-password')
+    .then(user =>{
+        res.json({ user });
+    }).catch(err =>{
+        res.status(401).json({ err });
+    })
+    
+}
 
-module.exports = { create }
+
+module.exports = { create, show }

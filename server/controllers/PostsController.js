@@ -10,6 +10,7 @@ function index(req, res){
     const options = {
         page,
         limit: 5,
+        sort:{ timestamp: -1 },
     };
     
     if (!req.user) return res.status(400).json({ message: "Invalid Request, missing Token" });
@@ -111,12 +112,15 @@ function create(req, res, next){
 
     const params = buildParams(validParams,req.body);
     params['_user'] = req.user.id;
-
+    console.log(' ##### req.body ####');
+    console.log(req.body);
     Post.create(params).then(doc=>{
         req.post = doc;
         next();
     }).catch(err=>{
-        next(err);
+        console.log(err);
+        console.log('error in create');
+        res.status(400).json({ message: "Missing Title or Content" });
     });
 }
 
@@ -135,6 +139,7 @@ function saveImage(req, res) {
 			req.post.updateImage(path).then(result =>{
                 res.json(req.post);
             }).catch(err => {
+                console.log(err);
 			    res.json(err);
             });
 		} else {

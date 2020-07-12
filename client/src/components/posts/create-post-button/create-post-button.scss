@@ -1,0 +1,27 @@
+.create-container {
+    margin: 40px 0 40px 60px;
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+
+    div {
+        display: flex;
+        border: none;
+        color: #fff;
+        background-color: purple;
+        padding: 10px 15px;
+        border-radius: 5px;
+        padding: 20px 30px;
+        cursor: pointer;
+
+        span {
+            margin-right: 8px;
+            font-weight: 600!important;
+        }
+
+        i {
+            margin: 0!important;
+            font-size: 16px;
+        }
+    } 
+}

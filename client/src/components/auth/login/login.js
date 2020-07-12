@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logIn } from '../../../redux/actions/user/actions';
+import { logIn, authenticateUser } from '../../../redux/actions/user/actions';
 import Navbar from '../../navbar/navbar';
 import MessageAlert from '../../message-alert/message-alert';
 import {
@@ -24,9 +24,17 @@ const LogIn = (props) => {
 
   const [localErrors, setLocalErrors] = useState(null)
 
-  if(props.isAuthenticated){
-    props.history.push('/posts');
-  }
+
+  useEffect(() => {
+    props.authenticateUser();
+
+    if(props.isAuthenticated){
+      props.history.push('/posts');
+    }
+
+  });
+
+  
 
   const handleChange = event => {
     event.preventDefault();
@@ -79,12 +87,12 @@ const LogIn = (props) => {
   }
 
   return(
-    <>
+    <> 
       <Navbar />
       <Grid textAlign="center" verticalAlign="middle" className="app">
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h1" icon color="grey" textAlign="center">
-          <Icon name="users" color="grey" />
+        <Header as="h1" icon color="violet" textAlign="center">
+          <Icon name="users" color="violet" />
 
           Login
         </Header>
@@ -102,10 +110,8 @@ const LogIn = (props) => {
               name="password"
               onChange={handleChange}
             ></input>
-
-
             <Button
-              color="grey"
+              color="violet"
               fluid
               size="large"
             >
@@ -134,7 +140,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  logIn
+  logIn,
+  authenticateUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

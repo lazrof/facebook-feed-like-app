@@ -66,6 +66,20 @@ const userReducer = (state = initialUserState, action) => {
         }
       }
 
+    case actionTypes.VALIDATE_TOKEN:
+      
+      return {
+        ...state,
+        authenticated: true
+      }
+
+    case actionTypes.VALIDATE_TOKEN_FAIL:
+
+      return {
+        ...state,
+        authenticated: false
+      }
+
     default:
       return state;
   }

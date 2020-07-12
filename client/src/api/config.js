@@ -1,4 +1,3 @@
-const serverBaseURL = 'http://localhost:8000/';
-
+const serverBaseURL = 'http://localhost:8000';
 
 export default serverBaseURL;

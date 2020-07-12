@@ -82,8 +82,8 @@ const Register = (props) => {
         <Navbar />
         <Grid textAlign="center" verticalAlign="middle" className="app">
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h1" icon color="grey" textAlign="center">
-            <Icon name="users" color="grey" />
+          <Header as="h1" icon color="violet" textAlign="center">
+            <Icon name="users" color="violet" />
 
             Register
           </Header>
@@ -110,7 +110,7 @@ const Register = (props) => {
 
               <Button
                 onClick={handleSubmit}
-                color="grey"
+                color="violet"
                 fluid
                 size="large"
               >
