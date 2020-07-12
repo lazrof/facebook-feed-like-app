@@ -46,7 +46,6 @@ export const getAllPosts = () => {
     let token = localStorage.getItem('authToken');
     axios.defaults.headers.common['Authorization'] = token;
 
-    console.log('getAllPosts');
   
     return async (dispatch) => {
         await axios({
@@ -69,8 +68,28 @@ export const getAllPosts = () => {
     }
 };
 
-// get all posts
-// update post
-// delete post
+export const deletePost = (postId) => {
 
-// get current post
+    let token = localStorage.getItem('authToken');
+    axios.defaults.headers.common['Authorization'] = token;
+
+    return async (dispatch) => {
+        await axios({
+            method: 'delete',
+            url: `/posts/${postId}`
+        }).then(response => {
+            console.log(response);
+            dispatch({
+                type: actionTypes.DELETE_POST,
+                payload: postId
+            });
+    
+        }).catch(error => {
+            console.log(error)
+            dispatch({
+                type: actionTypes.DELETE_POST_FAIL,
+                payload: error
+            })
+        });
+    }
+};

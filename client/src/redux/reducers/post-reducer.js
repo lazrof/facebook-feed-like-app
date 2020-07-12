@@ -10,7 +10,8 @@ const initialPostState = {
     response:{
         status:null,
         message:null
-    }
+    },
+    postCreated: null
 }
 
 const postReducer = (state = initialPostState, action) => {
@@ -22,6 +23,7 @@ const postReducer = (state = initialPostState, action) => {
             return {
                 ...state,
                 allPosts: [...state.allPosts, action.payload.data],
+                postCreated: true,
                 response:{
                     status:"success",
                     message:"Post Created!"
@@ -47,6 +49,15 @@ const postReducer = (state = initialPostState, action) => {
                     status:"success",
                     message: "Posts retrived"
                 }
+            };
+
+        case actionTypes.DELETE_POST:
+
+            return {
+                ...state,
+                allPosts:state.allPosts.filter(
+                    post => post._id !== action.payload
+                )
             };
 
         default:

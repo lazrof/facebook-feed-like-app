@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from "react-redux";
 import { Divider, Grid, Header, Icon, Segment } from 'semantic-ui-react'
+import { deletePost }  from '../../../redux/actions/post/actions';
 import './single-post.scss';
 
 const SinglePost = (props) =>{
@@ -15,6 +17,10 @@ const SinglePost = (props) =>{
 		}
 	}
 
+	const handleDeletePost = (e) => {
+		props.deletePost(props.data._id)
+	}
+
     return(
         <>
         <Grid.Row>
@@ -25,7 +31,7 @@ const SinglePost = (props) =>{
 				</div>
 				<div className="actions">
 					<Icon name="edit" color="blue"></Icon>
-					<Icon name="trash" color="red"></Icon>
+					<Icon onClick={handleDeletePost} name="trash" color="red"></Icon>
 				</div>
 			</div>
 			<Segment style={{ margin:'0 0 3em 0' }}>
@@ -38,4 +44,9 @@ const SinglePost = (props) =>{
     )
 }
 
-export default SinglePost;
+
+const mapDispatchToProps = {
+    deletePost
+};
+
+export default connect(null, mapDispatchToProps)(SinglePost);

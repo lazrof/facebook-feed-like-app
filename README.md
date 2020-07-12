@@ -40,4 +40,4 @@ Funcionando el Login y el Registro
 
 - /register   : Para el registro
 
-- /home       : Aterrizaje luego del registro
+- /posts       : Aterrizaje luego del registro
