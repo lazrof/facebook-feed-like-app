@@ -7,8 +7,10 @@ const initialUserState = {
   currentUser: null,
   authToken: null,
   authenticated: null,
-  responseStatus: null,
-  responseMessage:null,
+  response: {
+    status:null,
+    message:null
+  },
   registerSuccess: null
 }
 
@@ -25,8 +27,10 @@ const userReducer = (state = initialUserState, action) => {
           ...state,
           currentUser: action.payload.data.user.email,
           authToken: action.payload.data.jwt,
-          responseStatus: true,
-          responseMessage: 'success',
+          response:{
+            status:'success',
+            message:'Login success!'
+          },
           authenticated: true
         };
       
@@ -34,8 +38,10 @@ const userReducer = (state = initialUserState, action) => {
 
         return {
           ...state,
-          responseStatus: false,
-          responseMessage: action.payload.data.message,
+          response:{
+            status:'error',
+            message:action.payload.data.message
+          },
         };        
       }
 
@@ -46,25 +52,26 @@ const userReducer = (state = initialUserState, action) => {
 
     case actionTypes.REGISTER_USER:
       
-      if (action.payload.status == 200){
-        return {
-          ...state,
-          currentUser: action.payload.data.user.email,
-          responseStatus: true,
-          registerSuccess: true,
-          responseMessage: 'success'
-        };
+      return {
+        ...state,
+        currentUser: action.payload.data.user.email,
+        registerSuccess: true,
+        response:{
+          status:'success',
+          message: 'Register Success! you can Login now.'
+        },
+      }; 
+
+    case actionTypes.REGISTER_FAIL:
       
-      } else {
-
-        return {
-          ...state,
-          responseStatus: false,
-          responseMessage: action.payload.data.message,
-          registerSuccess: false
-        };        
+      return {
+        ...state,
+        registerSuccess: false,
+        response:{
+          status:'error',
+          message: 'Error, email already exists'
+        }
       }
-
 
     default:
       return state;

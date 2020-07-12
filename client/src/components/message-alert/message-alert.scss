@@ -1,0 +1,21 @@
+.alert-container {
+    position: fixed;
+    right: 25px;
+    bottom: 32px;
+    padding: 10px;   
+
+    p {
+        color: #fff;
+        font-size: 16px;
+        padding: 15px;
+        border-radius: 5px;
+
+        &.success {
+            background-color: #65a704;
+        }
+
+        &.error {
+            background-color: #A61448;
+        }
+    }
+}

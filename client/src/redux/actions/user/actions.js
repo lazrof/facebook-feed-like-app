@@ -23,22 +23,14 @@ export const registerUser = userData => {
         });
 
     }).catch(error => {
+      console.log(error)
         dispatch({
             type: REGISTER_FAIL,
-            payload: 'Register failed'
+            payload: error
         })
     });
   }
 };
-
-// export const logIn = user => {
-//   return {
-//     type: LOGIN,
-//     payload: {
-//       currentUser: 'Current User from Action'
-//     }
-//   };
-// };
 
 export const logIn = userCredentials => {
   
@@ -56,7 +48,7 @@ export const logIn = userCredentials => {
     }).catch(error => {
         dispatch({
             type: LOGIN_FAIL,
-            payload: 'Error on login'
+            payload: error
         })
     });
   }

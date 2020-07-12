@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import { registerUser } from '../../../redux/actions/user/actions';
 import { Link } from "react-router-dom";
-import Navbar from '../navbar/navbar';
+import Navbar from '../../navbar/navbar';
+import MessageAlert from '../../message-alert/message-alert';
 import {
     Grid,
     Form,
@@ -23,7 +24,7 @@ const Register = (props) => {
 
   const [localErrors, setLocalErrors] = useState(null)
 
-  if(props.serverResponseStatus){
+  if(props.registerSuccess){
     props.history.push('/');
   }
 
@@ -35,11 +36,6 @@ const Register = (props) => {
         [event.target.name]: event.target.value
     });
   };
-
-  const displayErrors = errors =>{
-    return errors.map((error) => <p key={error}>Fill {error} field.</p>);
-  }
-
 
   const handleSubmit = () => {
 
@@ -58,7 +54,29 @@ const Register = (props) => {
     }
       
   }
-    if (!props.serverResponseStatus){
+
+  const ErrorsAlerts = () => {
+
+    if (!localErrors){
+      return ''
+
+    } else if(props.serverResponse.status == 'error') {
+      let serverErrors = [{message: props.serverResponse.message , status:'error'}];
+      return <MessageAlert alerts={serverErrors} />
+
+    } else {
+      let messageErrors = []
+      localErrors.forEach(err => {
+        messageErrors.push(
+          {message: `${err} field is required`, status:'error'}
+        )
+      });
+
+      return <MessageAlert alerts={messageErrors} />
+      
+    }
+  }
+
     return(
         <>
         <Navbar />
@@ -85,14 +103,12 @@ const Register = (props) => {
               ></input>
               <input 
                 type="password" 
-                placeholder="Password Confirmation" 
+                placeholder="Password" 
                 name="password"
                 onChange={handleChange}
               ></input>
 
               <Button
-                /* disabled={false}
-                className={false ? "loading" : ""} */
                 onClick={handleSubmit}
                 color="grey"
                 fluid
@@ -103,7 +119,7 @@ const Register = (props) => {
             </Segment>
           </Form>
 
-          { localErrors ?  <Message error> {displayErrors(localErrors)} </Message> : '' }
+          <ErrorsAlerts />
 
           <Message>
             Already have an account? <Link to="/register">Login</Link>
@@ -112,14 +128,12 @@ const Register = (props) => {
       </Grid>
         </>
     )
-    } else {
-      return ''
-    }
 }
 
 const mapStateToProps = state => {
   return {
-    serverResponseStatus: state.userReducer.responseStatus,
+    registerSuccess: state.userReducer.registerSuccess,
+    serverResponse: state.userReducer.response
   };
 }
 
