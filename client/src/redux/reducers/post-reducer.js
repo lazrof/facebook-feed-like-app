@@ -59,6 +59,17 @@ const postReducer = (state = initialPostState, action) => {
                     post => post._id !== action.payload
                 )
             };
+        
+        case actionTypes.SET_CURRENT_POST:
+            let currentPost = state.allPosts.filter(post => post._id == action.payload)
+            return {
+                ...state,
+                currentPost:{
+                    title:currentPost.title,
+                    name:currentPost.name,
+                    image:currentPost.image,
+                }
+            };
 
         default:
             return state;

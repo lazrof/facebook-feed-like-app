@@ -93,3 +93,11 @@ export const deletePost = (postId) => {
         });
     }
 };
+
+export const setCurrentPost = (postId) => {
+
+    return {
+        type: actionTypes.SET_CURRENT_POST,
+        payload: postId
+    }
+}
