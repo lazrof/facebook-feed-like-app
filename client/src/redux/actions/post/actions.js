@@ -41,6 +41,47 @@ export const createPost = (postData, image) => {
     }
 };
 
+
+export const updatePost = (id, postData, image=null) => {
+
+    let token = localStorage.getItem('authToken');
+    axios.defaults.headers.common['Authorization'] = token;
+    axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+    
+    const formData = new FormData();
+    formData.append('title', postData.title);
+    formData.append('content', postData.content);
+    
+    if (image){
+        formData.append('image', image);
+    }
+
+    console.log('data before sending');
+    console.log(postData)
+  
+    return async (dispatch) => {
+        await axios({
+            method: 'put',
+            url: `/posts/${id}`,
+            data: formData
+        }).then(response => {
+            console.log(response)
+            dispatch({
+                type: actionTypes.UPDATE_POST,
+                payload: response
+            });
+    
+        }).catch(error => {
+            console.log('error IN REQUEST')
+            console.log(error)
+            dispatch({
+                type: actionTypes.UPDATE_POST_FAIL,
+                payload: error
+            })
+        });
+    }
+};
+
 export const getAllPosts = () => {
 
     let token = localStorage.getItem('authToken');
@@ -94,10 +135,18 @@ export const deletePost = (postId) => {
     }
 };
 
-export const setCurrentPost = (postId) => {
+export const setCurrentPost = (postData) => {
 
     return {
         type: actionTypes.SET_CURRENT_POST,
-        payload: postId
+        payload: postData
+    }
+}
+
+export const toggleModal = (toggle) => {
+
+    return {
+        type: actionTypes.TOGGLE_MODAL,
+        payload: toggle
     }
 }

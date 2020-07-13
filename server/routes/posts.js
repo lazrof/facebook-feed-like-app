@@ -21,16 +21,15 @@ router.route('/search')
         postsController.search)
 
 router.route('/:id')
-    //los metodos HTTP pueden rezcibir varios middlewares aparte de controladores
     .get(
         authorizeMiddleware,
         postsController.find, 
         postsController.show)
     .put(
         authorizeMiddleware,
+        postsController.multerMiddleware(),
         postsController.find,
         postsController.update,
-        postsController.multerMiddleware(),
         postsController.saveImage)
     .delete(
         authorizeMiddleware,

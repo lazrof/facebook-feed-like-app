@@ -11,7 +11,8 @@ const initialPostState = {
         status:null,
         message:null
     },
-    postCreated: null
+    postCreated: null,
+    openModal:false
 }
 
 const postReducer = (state = initialPostState, action) => {
@@ -61,14 +62,30 @@ const postReducer = (state = initialPostState, action) => {
             };
         
         case actionTypes.SET_CURRENT_POST:
-            let currentPost = state.allPosts.filter(post => post._id == action.payload)
             return {
                 ...state,
-                currentPost:{
-                    title:currentPost.title,
-                    name:currentPost.name,
-                    image:currentPost.image,
+                currentPost:action.payload,
+                postCreated:null
+            };
+        case actionTypes.UPDATE_POST:
+            
+            let currentPosts = state.allPosts.filter(post => post._id !== action.payload.data._id)
+            let newCurrentPosts = [action.payload.data, ...currentPosts]
+
+            return {
+                ...state,
+                allPosts: newCurrentPosts,
+                response:{
+                    status:"success",
+                    error:"Post updated!"
                 }
+            }
+
+        case actionTypes.TOGGLE_MODAL:
+            
+            return {
+                ...state,
+                openModal:action.payload
             };
 
         default:

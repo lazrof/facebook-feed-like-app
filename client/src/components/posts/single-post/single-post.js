@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { Divider, Grid, Header, Icon, Segment } from 'semantic-ui-react'
-import { deletePost }  from '../../../redux/actions/post/actions';
+import { deletePost, setCurrentPost, toggleModal }  from '../../../redux/actions/post/actions';
 import './single-post.scss';
 
 const SinglePost = (props) =>{
@@ -21,6 +21,11 @@ const SinglePost = (props) =>{
 		props.deletePost(props.data._id)
 	}
 
+	const handleUpdatePost = (e) => {
+		props.setCurrentPost(props.data);
+		props.toggleModal(true);
+	}
+
     return(
         <>
         <Grid.Row>
@@ -30,7 +35,7 @@ const SinglePost = (props) =>{
 					<Header as="h2">{props.data.title}</Header>
 				</div>
 				<div className="actions">
-					<Icon name="edit" color="blue"></Icon>
+					<Icon onClick={handleUpdatePost} name="edit" color="blue"></Icon>
 					<Icon onClick={handleDeletePost} name="trash" color="red"></Icon>
 				</div>
 			</div>
@@ -46,7 +51,9 @@ const SinglePost = (props) =>{
 
 
 const mapDispatchToProps = {
-    deletePost
+	setCurrentPost,
+	deletePost,
+	toggleModal
 };
 
 export default connect(null, mapDispatchToProps)(SinglePost);

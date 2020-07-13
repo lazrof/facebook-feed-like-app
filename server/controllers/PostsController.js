@@ -79,7 +79,6 @@ function update(req, res, next){
 
     if (req.post){
         const params = buildParams(validParams,req.body);
-
         req.post = Object.assign(req.post,params);
         req.post.save().then(doc=>{
             req.post = doc;
@@ -112,14 +111,11 @@ function create(req, res, next){
 
     const params = buildParams(validParams,req.body);
     params['_user'] = req.user.id;
-    console.log(' ##### req.body ####');
-    console.log(req.body);
     Post.create(params).then(doc=>{
         req.post = doc;
         next();
     }).catch(err=>{
         console.log(err);
-        console.log('error in create');
         res.status(400).json({ message: "Missing Title or Content" });
     });
 }

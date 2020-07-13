@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from "react-redux";
-import { Grid, Form, Modal, Message } from 'semantic-ui-react'
-import { createPost }  from '../../../redux/actions/post/actions';
+import { Form, Message } from 'semantic-ui-react'
+import { createPost, updatePost, toggleModal }  from '../../../redux/actions/post/actions';
 import CreatePostButton from '../create-post-button/create-post-button';
 import './create-post.scss';
 
@@ -14,6 +14,23 @@ const CreatePost = (props) => {
 
     const [localErrors, setLocalErrors] = useState(null);
     const [image, setImage] = useState('');
+
+    useEffect(() => {
+
+        if (props.currentPost) {
+            setPostData({
+                title: props.currentPost.title,
+                content: props.currentPost.content
+            });
+        } else {
+            setPostData({
+                title: null,
+                content: null
+            });
+            
+        }
+
+    }, [props.currentPost])
 
     const handleChange = event => {
         event.preventDefault();
@@ -41,10 +58,17 @@ const CreatePost = (props) => {
     
         } else {
             setLocalErrors([]);
-            props.createPost(postData, image);
-        }
-          
-      }
+            if (props.currentPost){
+                props.updatePost(props.currentPost._id, postData, image);
+            } else {
+                props.createPost(postData, image);
+                setPostData({
+                    title: null,
+                    content: null
+                });
+            }
+        } 
+    }
 
     const ErrorAlerts = () => {
         if (!localErrors){
@@ -66,38 +90,53 @@ const CreatePost = (props) => {
         }
     }
 
+    const outsideClick = (event) => {
+        if (event.target.id === 'modal' || event.target.id === 'close') {
+            props.toggleModal(false);
+        }
+    }
+
     return(
-        <Modal trigger={<Grid><CreatePostButton></CreatePostButton></Grid>}>
-            <Modal.Header>Create a Post</Modal.Header>
-            <Modal.Content>
-            <Form>
-                <Form.Input fluid 
-                    label='Title' 
-                    placeholder='El Quijote.' 
-                    name="title"
-                    onChange={handleChange}/>
-                <Form.TextArea 
-                    label='Content' 
-                    placeholder='Habia una vez...'
-                    name="content"
-                    onChange={handleChange}/>
-                <label htmlFor="image">Upload a image:</label>
-                <input 
-                    type="file"
-                    id="image" name="image"
-                    accept="image/png, image/jpeg"
-                    onChange={handleChangeImageInput}>
-                </input>
+        <>
+        <CreatePostButton />
+        <div id="modal" className={props.openModal ? 'modal show' : 'modal'} onClick={outsideClick}>
+            <div className="modal-content col-md-6" >
+                <div className="cart-header">
+                    <h3>Create a Post</h3>
+                    <span id="close" className="close">&times;</span>
+                </div>
+                <div className="cart-body">
+                    <Form>
+                        <Form.Input fluid 
+                            label='Title' 
+                            placeholder='El Quijote.' 
+                            name="title"
+                            value={postData.title ? postData.title : ""}
+                            onChange={handleChange}/>
+                        <Form.TextArea 
+                            label='Content' 
+                            placeholder='Habia una vez...'
+                            name="content"
+                            value={postData.content ? postData.content : ""}
+                            onChange={handleChange}/>
+                        <label htmlFor="image">Upload a image:</label>
+                        <input 
+                            type="file"
+                            id="image" name="image"
+                            accept="image/png, image/jpeg"
+                            onChange={handleChangeImageInput}>
+                        </input>
 
-                <ErrorAlerts />
-                <SuccessCreation />
+                        <ErrorAlerts />
+                        <SuccessCreation />
 
-                <Form.Button onClick={handleSubmit} style={{ margin:'1em 0 0 0'}}>Submit</Form.Button>
-            </Form>
-            <ErrorAlerts />
-            
-            </Modal.Content>
-        </Modal>
+                        <Form.Button onClick={handleSubmit} style={{ margin:'1em 0 0 0'}}>Submit</Form.Button>
+                    </Form>
+                    <ErrorAlerts />
+                </div>
+            </div>
+        </div>
+        </>
     )
 
 }
@@ -105,13 +144,17 @@ const CreatePost = (props) => {
 const mapStateToProps = state => {
 
     return {
+        currentPost : state.postReducer.currentPost,
         serverResponse: state.postReducer.response,
-        postCreated: state.postReducer.postCreated
+        postCreated: state.postReducer.postCreated,
+        openModal: state.postReducer.openModal
     }
 }
 
 const mapDispatchToProps = {
-    createPost
+    createPost,
+    updatePost,
+    toggleModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);
