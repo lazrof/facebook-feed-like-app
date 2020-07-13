@@ -9,17 +9,18 @@ Tecnologías:
 - Express Framework
 - JSON Web Tokens 
 - MongoDB
-- Cloudinary(para servicio de imagenes)
+- Cloudinary(para alojamiento de imagenes)
 - ReactJS
 - Redux
 - Redux Thunk
+- React Semantic UI
 - SASS
 
 ## Para correr el proyecto 
 
 Se debe usar docker-compose
 
-`docker-compose up`
+`docker-compose up --build`
 
 ## Credenciales
 
@@ -29,28 +30,28 @@ se pueden crear nuevos usarios.
 email: `nunzio_ruffo@hotmail.com`
 password : `123456`
 
-## Rutas para el backend
+## Rutas para en el backend
 Funcionando en el puerto :8000
 
 /users
+- GET : Obtener un usuario
 - POST : Registro de usuario
 
 /posts
-- GET       : Listado de Posts Relacionados a un usuario
-- POST      : Crear un post
+- GET       : Listado de posts relacionados a un usuario
+- POST      : Crear un post relacionados a un usuario
 
 /posts/:id
-- GET       : Obtener un solo post
+- GET       : Obtener un post
 - PUT       : Editar un post
 - DELETE    : Eliminar un post
 
-Autenticación
-
+**Autenticación**
 /login 
-- POST : Ingreso al App
+- POST : Ingreso al App, retorno de token
 
 
-## Frontend 
+## Rutas para en el frontend
 Funcionando el Login y el Registro
 
 - /  : Para Iniciar sesión
