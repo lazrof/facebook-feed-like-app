@@ -2,11 +2,22 @@ nav {
     display: flex !important;
     justify-content: flex-end;
     margin: 20px 20px;
+    z-index: 100;
+
+    @media (max-width: 768px) {
+        margin: 20px 10px 20px 20px;
+    }
+
 
     &.fixed {
         position: fixed; 
         right: 0; 
         margin: 40px;
+
+        @media (max-width: 768px) {
+            margin: 30px 10px 10px 10px;
+        }
+
     }
     
     a {
@@ -18,9 +29,18 @@ nav {
         transition: .3s all;
         cursor: pointer;
 
+        @media (max-width: 768px) {
+            background-color: #fff;
+            font-size: 12px;
+            padding: 4px 7px;
+            margin: 0 7px;
+        }
+
         &:hover {
             background: #6435c9;
             color: #fff;
         }
+
+        
     }
 }
