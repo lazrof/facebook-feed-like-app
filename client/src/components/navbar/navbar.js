@@ -1,17 +1,51 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import { connect } from "react-redux";
+import { logOut } from '../../redux/actions/user/actions';
 import { Link } from "react-router-dom";
 import './navbar.scss';
 
-const Navbar = () => {
+const Navbar = (props) => {
+
+    const handleLogOut = (e) => {
+        e.preventDefault();
+        props.logOut();
+    }
+
+    const NavbarLinks = () => {
+
+        if(props.isAuthenticated){
+            return (
+                <>
+                <a onClick={handleLogOut}>Log Out</a>
+                </>
+            );
+        } else {
+            return(
+                <>
+                <Link to="/">Login</Link>
+                <Link to="/register">Register</Link>
+                </>
+            )
+        }
+    }
 
     return(
         <>
-        <nav>
-            <Link to="/">Login</Link>
-            <Link to="/register">Register</Link>
+        <nav className={props.isFixed ? 'fixed' : ''}>
+            <NavbarLinks />
         </nav>
         </>
     )
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+    return {
+      isAuthenticated: state.userReducer.authenticated,
+    };
+  }
+  
+const mapDispatchToProps = {
+    logOut,
+}
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

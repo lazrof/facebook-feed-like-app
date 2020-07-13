@@ -24,7 +24,6 @@ const LogIn = (props) => {
 
   const [localErrors, setLocalErrors] = useState(null)
 
-
   useEffect(() => {
     props.authenticateUser();
 
@@ -33,8 +32,6 @@ const LogIn = (props) => {
     }
 
   });
-
-  
 
   const handleChange = event => {
     event.preventDefault();
@@ -106,7 +103,7 @@ const LogIn = (props) => {
             ></input>
             <input 
               type="password" 
-              placeholder="Password Confirmation" 
+              placeholder="Password" 
               name="password"
               onChange={handleChange}
             ></input>

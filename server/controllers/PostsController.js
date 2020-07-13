@@ -9,7 +9,7 @@ function index(req, res){
     const page = !req.query.page ? 1 : req.query.page; 
     const options = {
         page,
-        limit: 5,
+        limit: 10,
         sort:{ timestamp: -1 },
     };
     

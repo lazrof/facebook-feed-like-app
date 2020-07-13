@@ -1,7 +1,6 @@
 # fb-like-test
 
-
-Prueba Tecnica NodeJS y ReactJS
+**Prueba Tecnica NodeJS y ReactJS**
 
 Nunzio Ruffo
 
@@ -16,9 +15,19 @@ Tecnologías:
 - Redux Thunk
 - SASS
 
-Para correr el proyecto se debe usar docker-compose
+## Para correr el proyecto 
+
+Se debe usar docker-compose
 
 `docker-compose up`
+
+## Credenciales
+
+Credenciales de prueba por si son necesarias, igualmente en la vista para el registro
+se pueden crear nuevos usarios.
+
+email: `nunzio_ruffo@hotmail.com`
+password : `123456`
 
 ## Rutas para el backend
 Funcionando en el puerto :8000

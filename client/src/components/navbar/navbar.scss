@@ -2,6 +2,12 @@ nav {
     display: flex !important;
     justify-content: flex-end;
     margin: 20px 20px;
+
+    &.fixed {
+        position: fixed; 
+        right: 0; 
+        margin: 40px;
+    }
     
     a {
         margin: 0 15px;
@@ -10,6 +16,7 @@ nav {
         border-radius: 5px;
         padding: 8px 15px;
         transition: .3s all;
+        cursor: pointer;
 
         &:hover {
             background: #6435c9;

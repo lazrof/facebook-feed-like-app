@@ -20,18 +20,18 @@ const userReducer = (state = initialUserState, action) => {
 
     case actionTypes.LOGIN:
       
-        localStorage.setItem('authToken', action.payload.data.jwt)
-        return {
-          ...state,
-          currentUser: action.payload.data.user.email,
-          authToken: action.payload.data.jwt,
-          response:{
-            status:'success',
-            message:'Login success!'
-          },
-          authenticated: true,
-          registerSuccess:false
-        };
+      localStorage.setItem('authToken', action.payload.data.jwt)
+      return {
+        ...state,
+        currentUser: action.payload.data.user.email,
+        authToken: action.payload.data.jwt,
+        response:{
+          status:'success',
+          message:'Login success!'
+        },
+        authenticated: true,
+        registerSuccess:false
+      };
 
     case actionTypes.LOGIN_FAIL:
       return {
@@ -40,6 +40,13 @@ const userReducer = (state = initialUserState, action) => {
           status:'error',
           message: 'Error, Invalid Credentials.'
         },
+        authenticated: false,
+      }
+
+    case actionTypes.LOGOUT:
+      localStorage.removeItem('authToken');
+      return {
+        ...state,
         authenticated: false,
       }
 

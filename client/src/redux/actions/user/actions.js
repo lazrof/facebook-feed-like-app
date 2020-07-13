@@ -88,12 +88,8 @@ export function authenticateUser() {
   }
 }
 
-export const logOut = user => {
-  
+export const logOut = () => {
   return {
-    type: LOGOUT,
-      payload: {
-        currentUser: 'Current User CLEAR FROM ACTION'
-    }
+    type: LOGOUT
   };
 };

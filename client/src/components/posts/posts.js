@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
+import { getAllPosts } from '../../redux/actions/post/actions';
 import { Grid, Segment } from 'semantic-ui-react'
+import Navbar from '../navbar/navbar';
 import SinglePost from './single-post/single-post';
 import CreatePost from './create-post/create-post';
-import { getAllPosts } from '../../redux/actions/post/actions';
+
 
 
 const Posts = (props) => {
@@ -46,7 +48,8 @@ const Posts = (props) => {
 		}
 
 		return(
-			<>
+			<>	
+				<Navbar isFixed={true}/>
 				<CreatePost />
 				<Grid container style={{ padding: '5em 0em', justifyContent:'center' }} >
 					<Grid.Row style={{ maxWidth: 700 }}>

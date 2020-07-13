@@ -22,7 +22,7 @@ const postReducer = (state = initialPostState, action) => {
         
             return {
                 ...state,
-                allPosts: [...state.allPosts, action.payload.data],
+                allPosts: [action.payload.data, ...state.allPosts],
                 postCreated: true,
                 response:{
                     status:"success",
