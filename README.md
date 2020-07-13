@@ -33,6 +33,11 @@ password : `123456`
 ## Rutas para en el backend
 Funcionando en el puerto :8000
 
+**Autenticación**
+
+/login 
+- POST : Ingreso al App, retorno de token
+
 /users
 - GET : Obtener un usuario
 - POST : Registro de usuario
@@ -45,10 +50,6 @@ Funcionando en el puerto :8000
 - GET       : Obtener un post
 - PUT       : Editar un post
 - DELETE    : Eliminar un post
-
-**Autenticación**
-/login 
-- POST : Ingreso al App, retorno de token
 
 
 ## Rutas para en el frontend
