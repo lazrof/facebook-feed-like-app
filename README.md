@@ -1,8 +1,6 @@
 # fb-like-test
 
-**Prueba Tecnica NodeJS y ReactJS**
-
-Nunzio Ruffo
+**Practica NodeJS y ReactJS**
 
 Tecnologías: 
 - NodeJS
