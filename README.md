@@ -1,13 +1,11 @@
-# fb-like-test
+# facebook-feed-like-app
 
-**Practica NodeJS y ReactJS**
-
-Tecnologías: 
+Tech stack: 
 - NodeJS
 - Express Framework
 - JSON Web Tokens 
 - MongoDB
-- Cloudinary(para alojamiento de imagenes)
+- Cloudinary(to save images)
 - ReactJS
 - Redux
 - Redux Thunk
