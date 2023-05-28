@@ -16,6 +16,7 @@ function create(req,res,next){
         req.user = user;
         next();
     }).catch(err=>{
+        console.log(err);
         if (err.name === 'MongoError' && err.code === 11000) {
             res.status(400).json({ message: 'Email already exists' });
         } else {

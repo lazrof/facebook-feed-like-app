@@ -7,6 +7,8 @@ function authenticate(req,res,next) {
     
     if (req.body.email && req.body.password) {
 
+        console.log(req.body)
+
         User.findOne({email: req.body.email})
         .then(user=>{
 
@@ -18,7 +20,11 @@ function authenticate(req,res,next) {
             }else{
                 res.status(401).json({ message: "Invalid Password" });
             }
-        }).catch(error=> next(error));
+        }).catch(error=> {
+            res.status(401).json({ message: "Email not found" });
+            console.log(error)
+            next(error)
+        });
 
     } else {
         res.status(400).json({ message: "Missing email or password" });
