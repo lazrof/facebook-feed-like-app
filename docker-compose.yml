@@ -1,23 +1,31 @@
 version: "2"
 services:
-  fb_like_backend:
-    container_name: fb_like_backend
+  mongo:
+    image: mongo
     restart: always
-    build: ./server/
-    command: "npm start"
-    volumes:
-      - "./server:/src/"  
-      - /src/node_modules  
     ports:
-      - "8000:8000"
-  fb_like_front:
-    container_name: fb_like_front
-    restart: always
-    build: ./client/
-    stdin_open: true
-    command: "npm start"
-    volumes:    
-      - "./app/node_modules"  
-      - "./client:/app/"  
-    ports:
-      - "3000:3000"
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  # fb_like_backend:
+  #   container_name: fb_like_backend
+  #   restart: always
+  #   build: ./server/
+  #   command: "npm start"
+  #   volumes:
+  #     - "./server:/src/"  
+  #     #- /src/node_modules  
+  #   ports:
+  #     - "8000:8000"
+  # fb_like_front:
+  #   container_name: fb_like_front
+  #   restart: always
+  #   build: ./client/
+  #   stdin_open: true
+  #   command: "npm start"
+  #   volumes:    
+  #     - "./client:/app/"  
+  #     #- "/Users/nunzioruffo/my-projects/javascript/facebook-feed-like-app/app/node_modules"  
+  #   ports:
+  #     - "3000:3000"

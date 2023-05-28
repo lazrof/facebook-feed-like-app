@@ -1,7 +1,14 @@
 // This file will not go normally to the repository
+require('dotenv').config();
+const secretKey = process.env.APP_SECRET_KEY;
+const mongoUser = process.env.MONGO_USER;
+const mongoPass = process.env.MONGO_PASS;
+const mongoHost = process.env.MONGO_HOST;
+const dbName = 'facebook_like_app';
 
-const secretKey = 'p3uPHMggDVR4x5RdBX0hZz4l';
-const atlasDB   = 'mongodb+srv://root:O4UvCiIp7c753IlZ@nunzio-projects.mxwl8.mongodb.net/<dbname>?retryWrites=true&w=majority'
+//'mongodb://root:example@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000'
+//`mongodb+srv://${mongoUser}:${mongoPass}@${mongoHost}/${dbName}?retryWrites=true&w=majority`
+const mongoURL   = `mongodb://${mongoUser}:${mongoPass}@${mongoHost}/?retryWrites=true&w=majority`
 
 const cloudinary = {
     api_key: '439583423256799',
@@ -9,4 +16,4 @@ const cloudinary = {
     api_secret: 'SmtcOABl3spQ6AZq5u6vzs7zyv8'
 }
 
-module.exports = { atlasDB, secretKey, cloudinary }
+module.exports = { mongoURL, dbName, secretKey, cloudinary }
